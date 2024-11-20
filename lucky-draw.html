@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線上抽籤</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f7e8d0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        button {
+            background-color: #c41e3a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #a01830;
+        }
+        .result {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #c41e3a;
+            border-radius: 5px;
+            display: none;
+        }
+        select {
+            padding: 5px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .temple-img {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏮 線上抽籤 🏮</h1>
+        
+        <div class="temple-img">
+            <img src="/api/placeholder/200/200" alt="廟宇圖片">
+        </div>
+
+        <div>
+            <select id="drawType">
+                <option value="general">一般運勢</option>
+                <option value="love">姻緣籤</option>
+                <option value="career">事業籤</option>
+                <option value="health">健康籤</option>
+            </select>
+        </div>
+
+        <button onclick="drawLot()">抽籤</button>
+        <button onclick="clearResult()">重新抽籤</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const fortunes = {
+            general: [
+                "大吉 - 諸事順遂，福氣圓滿",
+                "中吉 - 平安喜樂，事事如意",
+                "小吉 - 平穩安康，漸入佳境",
+                "平籤 - 守成待變，靜觀其變",
+                "末吉 - 謹慎行事，樂觀以對"
+            ],
+            love: [
+                "桃花盛開，良緣將至",
+                "有情人終成眷屬",
+                "耐心等待，緣分即將到來",
+                "當前感情需要更多交流",
+                "暫時專注自我提升"
+            ],
+            career: [
+                "事業蒸蒸日上，有貴人相助",
+                "努力終將獲得回報",
+                "適合嘗試新的發展方向",
+                "穩定發展，循序漸進",
+                "謹慎行事，避免衝動"
+            ],
+            health: [
+                "身體康泰，精神愉快",
+                "保持運動習慣，益處良多",
+                "注意作息，調養身心",
+                "適度休息，避免過勞",
+                "留意飲食，保持健康"
+            ]
+        };
+
+        function drawLot() {
+            const type = document.getElementById('drawType').value;
+            const results = fortunes[type];
+            const randomIndex = Math.floor(Math.random() * results.length);
+            const result = results[randomIndex];
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h3>${getTypeText(type)}</h3>
+                <p style="font-size: 1.2em;">${result}</p>
+            `;
+        }
+
+        function clearResult() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none';
+        }
+
+        function getTypeText(type) {
+            const types = {
+                general: "一般運勢籤",
+                love: "姻緣籤",
+                career: "事業籤",
+                health: "健康籤"
+            };
+            return types[type];
+        }
+    </script>
+</body>
+</html>
